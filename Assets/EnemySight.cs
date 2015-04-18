@@ -26,7 +26,7 @@ public class EnemySight : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
 
 	//when something is in the enemy's detection range...
@@ -51,5 +51,36 @@ public class EnemySight : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	//if the player leaves the detection range, they can't be detected (obviously)
+	void OnTriggerExit(Collider other) {
+		if (other.gameObject == this.player) {
+			this.playerInSight = false;
+		}
+	}
+
+	//is the player audible? if the path length is less than or equal to the detection range, then I say yes!
+	float CalculatePathLength(Vector3 target) {
+		//compute the path using the navmesh
+		NavMeshPath path = new NavMeshPath();
+		if (this.nav.enabled) {
+			this.nav.CalculatePath(target, path);
+		}
+
+		//find the points on the path
+		Vector3[] points = new Vector3[path.corners.Length + 2];
+		points [0] = this.transform.position;
+		points [points.Length - 1] = target;
+		for (int i = 0; i < path.corners.Length; i++) {
+			points[i + 1] = path.corners[i];
+		}
+
+		//compute the length of the path
+		float pathlength = 0f;
+		for (int i = 0; i < points.Length - 1; i++) {
+			pathlength += Vector3.Distance(points[i], points[i + 1]);
+		}
+		return pathlength;
 	}
 }

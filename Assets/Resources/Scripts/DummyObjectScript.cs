@@ -46,6 +46,12 @@ public class DummyObjectScript : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.LeftControl)){
 			transform.localScale -= new Vector3(0.0f, 0.25f, 0.0f);
 		}
+		if (Input.GetKeyDown (KeyCode.LeftShift)) {
+			this.speed = 10f;
+		}
+		if(Input.GetKeyUp(KeyCode.LeftShift)){
+			this.speed = 5f;
+		}
 		if (onGround && Input.GetKeyDown ("space")){
 			rigidbody.AddForce(transform.up * jumpVelocity, ForceMode.VelocityChange);
 		}

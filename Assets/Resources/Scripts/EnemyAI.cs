@@ -7,11 +7,13 @@ public class EnemyAI : MonoBehaviour {
 	Transform target;
 	NavMeshAgent agent;
 	float distance;
+	float detectionrange = 50f;
 	float range = 10f;
 	//float speed = 20f;
 
 	// Use this for initialization
 	void Start () {
+		target = GameObject.FindGameObjectWithTag ("Player").transform;
 		agent = GetComponent<NavMeshAgent>();
 		Wander();
 	}
@@ -32,7 +34,7 @@ public class EnemyAI : MonoBehaviour {
 			//distance to player
 			distance = Vector3.Distance(target.position, transform.position);
 			//alternatively, have we found a player?
-			if (distance < range) {
+			if (distance < detectionrange) {
 				agent.destination = target.position;
 			}
 		}

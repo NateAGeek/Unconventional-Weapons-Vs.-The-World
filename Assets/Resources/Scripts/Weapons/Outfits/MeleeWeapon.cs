@@ -4,6 +4,7 @@ using System.Collections;
 public class MeleeWeapon : IWeaponOutfit {
 	private Scrap weaponBase;
 	private Scrap accessory;
+	private GameObject entity;
 
 	public MeleeWeapon()
 	{
@@ -11,7 +12,7 @@ public class MeleeWeapon : IWeaponOutfit {
 		accessory = null;
 	}
 
-	public int damageOutput()
+	public int damageOutput(DamageType type)
 	{
 		return 0;
 	}
@@ -24,5 +25,20 @@ public class MeleeWeapon : IWeaponOutfit {
 	public bool throwable()
 	{
 		return false;
+	}
+
+	public void onUnequip()
+	{
+
+	}
+
+	public void onEquip()
+	{
+		
+	}
+
+	public GameObject getEntity()
+	{
+		return entity;
 	}
 }

@@ -2,6 +2,9 @@
 using System.Collections;
 
 public class Scrap : MonoBehaviour, IWeaponOutfit {
+	public int meleeDmg;
+	public int rangeDmg;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -12,9 +15,19 @@ public class Scrap : MonoBehaviour, IWeaponOutfit {
 	
 	}
 
-	public int damageOutput()
+	public int damageOutput(DamageType type)
 	{
-		return 0;
+		switch(type){
+			case DamageType.MELEE:
+				return meleeDmg;
+				break;
+			case DamageType.RANGED:
+				return rangeDmg;
+				break;
+			default:
+				return 0;
+				break;
+		}
 	}
 
 	public int weaponHealth()
@@ -25,5 +38,20 @@ public class Scrap : MonoBehaviour, IWeaponOutfit {
 	public bool throwable()
 	{
 		return true;
+	}
+
+	public void onUnequip()
+	{
+		gameObject.SetActive(false);
+	}
+
+	public void onEquip()
+	{
+		gameObject.SetActive(true);
+	}
+
+	public GameObject getEntity()
+	{
+		return gameObject;
 	}
 }

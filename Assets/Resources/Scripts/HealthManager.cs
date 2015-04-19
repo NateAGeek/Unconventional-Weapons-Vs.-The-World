@@ -3,7 +3,7 @@ using System.Collections;
 
 public abstract class HealthManager : MonoBehaviour {
 	public int maxHealth;
-	public int currentHealth;
+	protected int currentHealth;
 	public bool isAlive = true;
 
 	/// <summary>
@@ -20,9 +20,15 @@ public abstract class HealthManager : MonoBehaviour {
 		}
 	}
 
+	protected void CheckLiving() {
+		if (!this.isAlive) {
+			this.OnDead();
+		}
+	}
+
 	/// <summary>
 	/// called when isAlive = false, preferably in the Update method
 	/// handles death of an entity
 	/// </summary>
-	public abstract void OnDead();
+	protected abstract void OnDead();
 }

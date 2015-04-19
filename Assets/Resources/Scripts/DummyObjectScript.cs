@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class DummyObjectScript : DamageManager {
+public class DummyObjectScript : HealthManager {
 
 	//Public Prefrancese
 	public Vector2 sensitivity  = new Vector2(10.0f, 10.0f);

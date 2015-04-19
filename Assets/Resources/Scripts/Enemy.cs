@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Enemy : DamageManager {
+public class Enemy : HealthManager {
 
 	private NavMeshAgent agent;
 	private EnemyAI ai;

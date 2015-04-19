@@ -12,7 +12,7 @@ GameObject:
   - 135: {fileID: 13544856}
   - 23: {fileID: 2330634}
   - 114: {fileID: 11495970}
-  - 54: {fileID: 5417170}
+  - 54: {fileID: 5463060}
   m_Layer: 0
   m_Name: Rock
   m_TagString: Interactable
@@ -27,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 118474}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.42999983, y: 1.63999999, z: 3.92000008}
+  m_LocalPosition: {x: -.671000004, y: 5.74900007, z: 1.21899998}
   m_LocalScale: {x: .150000006, y: .150000006, z: .150000006}
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,7 +63,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 118474}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &5417170
+--- !u!54 &5463060
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -72,11 +72,11 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: .0500000007
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &11495970
 MonoBehaviour:
@@ -89,8 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d74cb714b87555418a7f8fb79fc99f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meleeDmg: 1
-  rangeDmg: 12
+  meleeDmg: 0
+  rangeDmg: 0
 --- !u!135 &13544856
 SphereCollider:
   m_ObjectHideFlags: 1

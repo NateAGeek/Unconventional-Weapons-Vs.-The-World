@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class DummyObjectScript : DamageManager {
+public class DummyObjectScript : MonoBehaviour {
 
 	//Public Prefrancese
 	public Vector2 sensitivity  = new Vector2(10.0f, 10.0f);
@@ -21,16 +21,11 @@ public class DummyObjectScript : DamageManager {
 	private bool      hitSomethingInAir = false;
 
     void Start() {
-		if (this.maxHealth == 0) {
-			this.maxHealth = 100;
-		}
-		this.currentHealth = this.maxHealth;
 		camera = GetComponentInChildren<Camera>();
 		rigidbody = GetComponent<Rigidbody>();
     }
 
     void Update() {
-		this.CheckLiving();
 		//Do the Calculations for rotation
 		rotation.x += Input.GetAxis ("Mouse X") * sensitivity.x;
 		rotation.y += Input.GetAxis ("Mouse Y") * sensitivity.y;
@@ -103,9 +98,5 @@ public class DummyObjectScript : DamageManager {
 	void OnTriggerExit(Collider hit){
 		//Trigger for feet to see if off floor to entity
 		onGround = false;
-	}
-
-	protected override void OnDead() {
-		Destroy(this.gameObject);
 	}
 }

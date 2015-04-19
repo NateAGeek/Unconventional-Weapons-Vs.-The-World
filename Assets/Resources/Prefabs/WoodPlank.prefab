@@ -14,7 +14,7 @@ GameObject:
   - 114: {fileID: 11478878}
   - 54: {fileID: 5455760}
   m_Layer: 0
-  m_Name: Board
+  m_Name: WoodPlank
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 190660}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d74cb714b87555418a7f8fb79fc99f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7210019021dab5f4395f63f220de2804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   meleeDmg: 7

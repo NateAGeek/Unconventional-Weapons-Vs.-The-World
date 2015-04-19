@@ -88,9 +88,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 192696}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2a2db756ec8a4c45b58668da729d62f, type: 3}
+  m_Script: {fileID: 11500000, guid: 19a6c58d3ce6855438f559da115c4d14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  isAlive: 1
 --- !u!135 &13582148
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -101,7 +104,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: .699999988
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &13691790
 CapsuleCollider:

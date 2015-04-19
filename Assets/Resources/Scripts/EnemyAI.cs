@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyAI : MonoBehaviour {
+public class EnemyAI {
 	Vector3 waypoint;
 	Transform target;
 	NavMeshAgent agent;
@@ -11,20 +11,27 @@ public class EnemyAI : MonoBehaviour {
 	//the range from which random waypoints can be selected
 	float range = 10f;
 
-	void Start () {
+	public EnemyAI(NavMeshAgent agent) : this(50f, agent) {}
+	public EnemyAI(float detectionrange, NavMeshAgent agent)  {
+		this.detectionrange = detectionrange;
 		//if this becomes multiplayer, target will become a Transform[] and we can call FindGameObjectsWithTag("Player"), and get the transforms from the ones in that list
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
-		agent = GetComponent<NavMeshAgent>();
-		Wander();
+		this.agent = agent;
 	}
-	void Update () {
+
+	/// <summary>
+	/// Update function.
+	/// should be called in the Update function
+	/// </summary>
+	/// <param name="transform">The calling class's transform object</param>
+	public void Update(Transform transform) {
 		//move
 		agent.destination = waypoint;
 		
 		//have we reached the waypoint?
 		if(Vector3.Distance(transform.position, waypoint) < 3f) {
 			//go somewhere else
-			Wander();
+			Wander(transform);
 		}
 		if (target != null) {
 			//distance to player
@@ -36,7 +43,7 @@ public class EnemyAI : MonoBehaviour {
 		}
 	}
 	//if there is no player found, the enemy will wander the area
-	void Wander() {
+	private void Wander(Transform transform) {
 		//set a new random point to go to
 		waypoint = new Vector3(Random.Range(transform.position.x - range, transform.position.x + range), 1,
 		                       Random.Range(transform.position.z - range, transform.position.z + range)

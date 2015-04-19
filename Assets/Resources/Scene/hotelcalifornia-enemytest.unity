@@ -1815,6 +1815,10 @@ Prefab:
       propertyPath: m_Name
       value: Enemy 7
       objectReference: {fileID: 0}
+    - target: {fileID: 13582148, guid: c4f6d5fe2deb5cb458dbfb53e5f71bf3, type: 2}
+      propertyPath: m_Radius
+      value: 1.20000005
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: c4f6d5fe2deb5cb458dbfb53e5f71bf3, type: 2}

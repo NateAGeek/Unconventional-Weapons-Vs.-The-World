@@ -15,7 +15,7 @@ public class MeleeWeapon : MonoBehaviour, IWeaponOutfit {
 	}
 
 	public void buildWeapon(ScrapPiece base_model, ScrapPiece crap_inside){
-		string baseWeaponName = base_model.name ();
+		string baseWeaponName = base_model.name();
 		string crapInsideWeaponName = crap_inside.name();
 		WeaponComponents.Add(base_model.name(), base_model);
 		WeaponComponents.Add(crap_inside.name(), crap_inside);

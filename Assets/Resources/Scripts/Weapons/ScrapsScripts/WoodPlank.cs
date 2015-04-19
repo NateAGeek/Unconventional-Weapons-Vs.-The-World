@@ -22,7 +22,9 @@ public class WoodPlank : MonoBehaviour, ScrapPiece {
 	}
 
 	public void setMesh(string type){
-		meshFilter.mesh = Resources.Load("Models/WoodPlank_" + type) as Mesh;
+		Debug.Log ("Loading Wood: "+"Models/MetalNail_" + type +".blend");
+		//Mesh mesh = Resources.Load ("Models/WoodPlank_" + type+".blend") as Mesh;
+		//meshFilter.mesh = mesh;
 	}
 
 	public bool canFunctionAs(string type){

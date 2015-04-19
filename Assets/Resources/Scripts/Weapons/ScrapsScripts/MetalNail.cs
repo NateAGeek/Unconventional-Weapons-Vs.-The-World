@@ -22,7 +22,9 @@ public class MetalNail : MonoBehaviour, ScrapPiece {
 	}
 	
 	public void setMesh(string type){
-		meshFilter.mesh = Resources.Load("Models/MetalNail_" + type) as Mesh;
+		Debug.Log ("Loading Nail: "+"Models/MetalNail_" + type);
+		//Mesh mesh = Resources.Load("Models/MetalNail_" + type) as Mesh;
+		//meshFilter.mesh = mesh;
 	}
 	
 	public bool canFunctionAs(string type){

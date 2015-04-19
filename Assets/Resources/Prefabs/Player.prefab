@@ -75,7 +75,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120982}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .342000008, y: -.335999966, z: .779999971}
+  m_LocalPosition: {x: .300000012, y: -.300000012, z: .800000012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 449012}
@@ -238,6 +238,7 @@ MonoBehaviour:
   speed: 5
   jumpVelocity: 5
   knockbackDistance: 1
+  GameHUDCanvas: {fileID: 0}
 --- !u!136 &13699360
 CapsuleCollider:
   m_ObjectHideFlags: 1

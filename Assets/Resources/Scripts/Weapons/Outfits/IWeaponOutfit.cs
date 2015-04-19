@@ -2,15 +2,16 @@
 using System.Collections;
 
 public interface IWeaponOutfit {
-
-	int damageOutput(DamageType type);
-
-	int weaponHealth();
-
+	
+	//Properties methods
 	bool throwable();
 
-	void onUnequip();
+	//Methods
+	int damageOutput(DamageType type);
+	int weaponHealth();
 
+	//Equip methods
+	void onUnequip();
 	void onEquip();
 
 	GameObject getEntity();

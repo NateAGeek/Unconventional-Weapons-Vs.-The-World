@@ -42,12 +42,12 @@ public class Scrap : MonoBehaviour, IWeaponOutfit {
 
 	public void onUnequip()
 	{
-		gameObject.SetActive(false);
+		//gameObject.SetActive(true);
 	}
 
 	public void onEquip()
 	{
-		gameObject.SetActive(true);
+		//gameObject.SetActive(true);
 	}
 
 	public GameObject getEntity()

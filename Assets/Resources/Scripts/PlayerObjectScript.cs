@@ -193,9 +193,7 @@ public class PlayerObjectScript: HealthManager {
 
 	void OnCollisionExit(Collision hit) {
 		//If we exit a collision we should just assume that we have not hit a wall or anything
-		if (!onGround && hit.gameObject.tag == "Untagged") {
-			hitSomethingInAir = false;
-		}
+		hitSomethingInAir = false;
 	}
 
 	void OnTriggerEnter(Collider hit){
@@ -206,9 +204,7 @@ public class PlayerObjectScript: HealthManager {
 
 	void OnTriggerExit(Collider hit){
 		//Trigger for feet to see if off floor to entity
-		if (hit.gameObject.tag != "Untagged") {
-			onGround = false;
-		}
+		onGround = false;
 	}
 
 	protected override void OnDead() {

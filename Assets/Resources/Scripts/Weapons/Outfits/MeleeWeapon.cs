@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public class MeleeWeapon : HealthManager, IWeaponOutfit {
 	private GameObject entity;
-	private Dictionary<string, Vector3> WeaponRecipe = new Dictionary<string, Vector3>(){
-		{"Base"      , new Vector3(0.0f, 0.0f, 0.0f)},
-		{"CrapInside", new Vector3(0.0f, 0.0f, 0.0f)},
+	private Dictionary<string, bool> WeaponComponets = new Dictionary<string, bool>(){
+		{"Base"      , true},
+		{"CrapInside", true},
 	};
 	private Dictionary<string, ScrapPiece> WeaponComponents = new Dictionary<string, ScrapPiece>();
 
@@ -47,6 +47,10 @@ public class MeleeWeapon : HealthManager, IWeaponOutfit {
 	public bool throwable()
 	{
 		return false;
+	}
+
+	public Dictionary<string, bool> getRecipe() {
+		return WeaponComponets;
 	}
 
 	public void onUnequip()

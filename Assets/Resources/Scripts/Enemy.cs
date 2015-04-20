@@ -30,7 +30,7 @@ public class Enemy : HealthManager {
 
 	void OnTriggerStay(Collider other) {
 		//if the object triggering the collider is a player...
-		if (other.gameObject == GameObject.FindGameObjectWithTag ("Player")) {
+		if (other.transform.tag == "Player") {
 			//...get the player as a script...
 			DummyObjectScript player = other.gameObject.GetComponent<DummyObjectScript>();
 			//...and damage it

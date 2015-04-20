@@ -20,13 +20,10 @@ public class Scrap : MonoBehaviour, IWeaponOutfit {
 		switch(type){
 			case DamageType.MELEE:
 				return meleeDmg;
-				break;
 			case DamageType.RANGED:
 				return rangeDmg;
-				break;
 			default:
 				return 0;
-				break;
 		}
 	}
 

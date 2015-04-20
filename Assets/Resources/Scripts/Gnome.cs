@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Gnome : DamageManager {
+public class Gnome : HealthManager {
 
 	private NavMeshAgent agent;
 	private EnemyAI ai;

@@ -14,7 +14,7 @@ public class MetalNail : MonoBehaviour, ScrapPiece {
 		meshFilter = GetComponent<MeshFilter>();
 		setMesh(currentType);
 	}
-	
+	//
 	public void setFunctionality(string type, Vector3 scrap_postition){
 		setMesh(type);
 		currentType = type;

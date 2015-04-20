@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 0
+  currentHealth: 0
   isAlive: 1
   maxDamage: 0
   sensitivity: {x: 10, y: 10}

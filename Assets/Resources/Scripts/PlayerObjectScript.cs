@@ -36,8 +36,10 @@ public class PlayerObjectScript: HealthManager {
 
     void Start() {
 		if (maxHealth == 0) {
-			maxHealth = 100;
+			maxHealth = 500;
 		}
+		//TODO: remove this once weapons are the things that actually do damage
+		maxDamage = 15;
 
 		//Add Temp items?
 		Inventory.Add(Resources.Load("Prefabs/MetalNail") as GameObject);
@@ -68,7 +70,7 @@ public class PlayerObjectScript: HealthManager {
 			//Do the Calculations for rotation
 			rotation.x += Input.GetAxis ("Mouse X") * sensitivity.x;
 			rotation.y += Input.GetAxis ("Mouse Y") * sensitivity.y;
-			rotation.y  = Mathf.Clamp (rotation.y, rotationMin.y, rotationMax.y);
+			rotation.y = Mathf.Clamp (rotation.y, rotationMin.y, rotationMax.y);
 
 			transform.localEulerAngles = new Vector3 (0.0f, rotation.x, 0.0f);
 			camera.transform.localEulerAngles = new Vector3 (-rotation.y, 0.0f, 0.0f);
@@ -82,32 +84,33 @@ public class PlayerObjectScript: HealthManager {
 
 				rigidbody.AddForce (velocityChange, ForceMode.VelocityChange);
 			}
-			if(Input.GetKeyDown(KeyCode.LeftControl)){
-				transform.localScale -= new Vector3(0.0f, 0.25f, 0.0f);
+			if (Input.GetButtonDown ("Crouch")) {
+				transform.localScale -= new Vector3 (0.0f, 0.25f, 0.0f);
 			}
-			if (Input.GetKeyDown (KeyCode.LeftShift)) {
+			if (Input.GetButtonUp ("Crouch")) {
+				transform.localScale += new Vector3 (0.0f, 0.25f, 0.0f);
+			}
+			if (Input.GetButtonDown ("Sprint")) {
 				this.speed = 10f;
 			}
-			if(Input.GetKeyUp(KeyCode.LeftShift)){
+			if (Input.GetButtonUp ("Sprint")) {
 				this.speed = 5f;
 			}
-			if (onGround && Input.GetKeyDown ("space")){
-				rigidbody.AddForce(transform.up * jumpVelocity, ForceMode.VelocityChange);
+			if (onGround && Input.GetButtonDown ("Jump")) {
+				rigidbody.AddForce (transform.up * jumpVelocity, ForceMode.VelocityChange);
 			}
-			if(Input.GetKeyUp(KeyCode.LeftControl)){
-				transform.localScale += new Vector3(0.0f, 0.25f, 0.0f);
-			}
+
 
 			//Item handel this stuff m8
-			if(Input.GetButtonDown("Interact")){
+			if (Input.GetButtonDown ("Interact")) {
 				RaycastHit hit;
-				Ray ray = gameObject.GetComponentInChildren<Camera>().ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2));
+				Ray ray = gameObject.GetComponentInChildren<Camera> ().ScreenPointToRay (new Vector3 (Screen.width / 2, Screen.height / 2));
 				
-				if(Physics.Raycast(ray, out hit)){
-					if(hit.transform.gameObject.tag == "Interactable"){
-						Inventory.Add(hit.collider.gameObject);
+				if (Physics.Raycast (ray, out hit)) {
+					if (hit.transform.gameObject.tag == "Interactable") {
+						Inventory.Add (hit.collider.gameObject);
 
-						InventoryGUI.Add(hit.collider.gameObject);
+						InventoryGUI.Add (hit.collider.gameObject);
 
 						hit.collider.transform.position = InventoryBag.transform.position;
 						hit.collider.transform.rotation = InventoryBag.transform.rotation;
@@ -118,53 +121,64 @@ public class PlayerObjectScript: HealthManager {
 				}
 			}
 
+			//Menu controls
+			if (Input.GetButtonDown ("Interact") && CurrentAction == "None") {
+				RaycastHit hit;
+				Ray ray = camera.ScreenPointToRay (new Vector3 (Screen.width / 2, Screen.height / 2, 0.0f));
+				
+				if (Physics.Raycast (ray, out hit, 1.0f)) {
+					if (hit.collider.tag == "WorkBench") {
+						freeze = true;
+						CurrentAction = "WorkBench";
+						WorkBenchHUD.SetActive (true);
+						GameHUD.SetActive (false);
+					}
+				}			
+			} else if (Input.GetButtonDown ("Interact") && CurrentAction == "WorkBench") {
+				freeze = false;
+				CurrentAction = "None";
+				WorkBenchHUD.SetActive (false);
+				GameHUD.SetActive (true);
+			} else if (Input.GetButtonDown ("Inventory") && CurrentAction == "None") {
+				freeze = true;
+				CurrentAction = "Inventory";
+				InventoryHUD.SetActive (true);
+				GameHUD.SetActive (false);
+			} else if (Input.GetButtonDown ("Inventory") && CurrentAction == "Inventory") {
+				freeze = false;
+				CurrentAction = "None";
+				InventoryHUD.SetActive (false);
+				GameHUD.SetActive (true);
+			}
+
 
 			//Weapon Interactions
-			if (Input.GetMouseButtonDown(1)) {
+			if (Input.GetButtonDown ("Fire2")) { 
 				//Knock dem bitches back
 				RaycastHit hit;
-				Ray ray = camera.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0.0f));
+				Ray ray = camera.ScreenPointToRay (new Vector3 (Screen.width / 2, Screen.height / 2, 0.0f));
 				
-				if(Physics.Raycast(ray, out hit, knockbackDistance)) {
-					if(hit.collider.tag == "Gnome"){
-						Gnome gnome = hit.collider.gameObject.GetComponent<Gnome>();
-						gnome.knockbackGnome(transform);
+				if (Physics.Raycast (ray, out hit, knockbackDistance)) {
+					if (hit.collider.tag == "Gnome") {
+						Gnome gnome = hit.collider.gameObject.GetComponent<Gnome> ();
+						gnome.knockbackGnome (transform);
 					}
 				}
-			}		
-		}
+			}
 
-		//Menu controls
-		if (Input.GetButtonDown ("Interact") && CurrentAction == "None") {
-			RaycastHit hit;
-			Ray ray = camera.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0.0f));
-			
-			if(Physics.Raycast(ray, out hit, 1.0f)) {
-				if(hit.collider.tag == "WorkBench"){
-					freeze  = true;
-					CurrentAction = "WorkBench";
-					WorkBenchHUD.SetActive(true);
-					GameHUD.SetActive(false);
+			if (Input.GetButtonDown ("Fire1")) {
+				RaycastHit hit;
+				//ray through the middle of the screen, i.e. where the player is looking
+				Ray ray = gameObject.GetComponentInChildren<Camera> ().ScreenPointToRay (new Vector3 (Screen.width / 2, Screen.height / 2));
+
+				if (Physics.Raycast (ray, out hit)) {
+					if (hit.collider.tag == "Gnome") {
+						Gnome gnome = hit.collider.gameObject.GetComponent<Gnome> ();
+						//TODO: weapons should be the things dealing damage. once the equip system is set up, change this to be something like `currentWeapon.DealDamage(gnome);`
+						DealDamage (gnome);
+					}
 				}
-			}			
-		}
-		else if (Input.GetButtonDown ("Interact") && CurrentAction == "WorkBench") {
-			freeze  = false;
-			CurrentAction = "None";
-			WorkBenchHUD.SetActive(false);
-			GameHUD.SetActive(true);
-		}
-		else if (Input.GetButtonDown("Invotory") && CurrentAction == "None") {
-			freeze  = true;
-			CurrentAction = "Invotory";
-			InventoryHUD.SetActive(true);
-			GameHUD.SetActive(false);
-		}
-		else if (Input.GetButtonDown("Invotory") && CurrentAction == "Invotory") {
-			freeze  = false;
-			CurrentAction = "None";
-			InventoryHUD.SetActive(false);
-			GameHUD.SetActive(true);
+			}
 		}
 	
     }

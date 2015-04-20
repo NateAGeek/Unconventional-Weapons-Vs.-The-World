@@ -10,6 +10,8 @@ public class WoodPlank : MonoBehaviour, ScrapPiece {
 	private MeshFilter meshFilter;
     private string ScrapPieceName = "WoodPlank";
 
+	//
+
 	void Start(){
 		meshFilter = GetComponent<MeshFilter>();
 		setMesh(currentType);

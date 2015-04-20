@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class MeleeWeapon : MonoBehaviour, IWeaponOutfit {
+public class MeleeWeapon : HealthManager, IWeaponOutfit {
 	private GameObject entity;
 	private Dictionary<string, Vector3> WeaponRecipe = new Dictionary<string, Vector3>(){
 		{"Base"      , new Vector3(0.0f, 0.0f, 0.0f)},
@@ -10,9 +10,18 @@ public class MeleeWeapon : MonoBehaviour, IWeaponOutfit {
 	};
 	private Dictionary<string, ScrapPiece> WeaponComponents = new Dictionary<string, ScrapPiece>();
 
-	public MeleeWeapon() {
+	//constructors
+	public MeleeWeapon() : this(15, 100) {}
 
+	public MeleeWeapon(int durability) : this(15, durability) {}
+
+	//the healthmanager lets us assign damage and durability (as an analogue to health)
+	public MeleeWeapon(int damage, int durability) {
+		this.maxDamage = damage;
+		this.maxHealth = durability;
+		this.currentHealth = this.maxHealth;
 	}
+	//
 
 	public void buildWeapon(ScrapPiece base_model, ScrapPiece crap_inside){
 		string baseWeaponName = base_model.name();
@@ -32,7 +41,7 @@ public class MeleeWeapon : MonoBehaviour, IWeaponOutfit {
 
 	public int weaponHealth()
 	{
-		return 0;
+		return this.currentHealth;
 	}
 
 	public bool throwable()
@@ -53,5 +62,9 @@ public class MeleeWeapon : MonoBehaviour, IWeaponOutfit {
 	public GameObject getEntity()
 	{
 		return entity;
+	}
+
+	protected override void OnDead() {
+
 	}
 }

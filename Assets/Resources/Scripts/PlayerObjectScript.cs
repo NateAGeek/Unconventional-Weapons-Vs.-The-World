@@ -87,21 +87,22 @@ public class PlayerObjectScript: HealthManager {
 
 				rigidbody.AddForce (velocityChange, ForceMode.VelocityChange);
 			}
-			if(Input.GetKeyDown(KeyCode.LeftControl)){
+			if(Input.GetButtonDown("Crouch")){
 				transform.localScale -= new Vector3(0.0f, 0.25f, 0.0f);
 			}
-			if (Input.GetKeyDown (KeyCode.LeftShift)) {
-				this.speed = 10f;
-			}
-			if(Input.GetKeyUp(KeyCode.LeftShift)){
-				this.speed = 5f;
-			}
-			if (onGround && Input.GetKeyDown ("space")){
-				rigidbody.AddForce(transform.up * jumpVelocity, ForceMode.VelocityChange);
-			}
-			if(Input.GetKeyUp(KeyCode.LeftControl)){
+			if(Input.GetButtonUp("Crouch")){
 				transform.localScale += new Vector3(0.0f, 0.25f, 0.0f);
 			}
+			if (Input.GetButtonDown("Sprint")) {
+				this.speed = 10f;
+			}
+			if(Input.GetButtonUp("Sprint")){
+				this.speed = 5f;
+			}
+			if (onGround && Input.GetButtonDown ("Jump")){
+				rigidbody.AddForce(transform.up * jumpVelocity, ForceMode.VelocityChange);
+			}
+
 
 			//Item handel this stuff m8
 			if(Input.GetButtonDown("Interact")){
@@ -117,6 +118,39 @@ public class PlayerObjectScript: HealthManager {
 						hit.collider.transform.parent = InventoryBag.transform;
 					}
 				}
+			}
+
+			//Menu controls
+			if (Input.GetButtonDown ("Interact") && CurrentAction == "None") {
+				RaycastHit hit;
+				Ray ray = camera.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0.0f));
+				
+				if(Physics.Raycast(ray, out hit, 1.0f)) {
+					if(hit.collider.tag == "WorkBench"){
+						freeze  = true;
+						CurrentAction = "WorkBench";
+						WorkBenchHUD.SetActive(true);
+						GameHUD.SetActive(false);
+					}
+				}			
+			}
+			else if (Input.GetButtonDown ("Interact") && CurrentAction == "WorkBench") {
+				freeze  = false;
+				CurrentAction = "None";
+				WorkBenchHUD.SetActive(false);
+				GameHUD.SetActive(true);
+			}
+			else if (Input.GetButtonDown("Inventory") && CurrentAction == "None") {
+				freeze  = true;
+				CurrentAction = "Inventory";
+				InvatoryHUD.SetActive(true);
+				GameHUD.SetActive(false);
+			}
+			else if (Input.GetButtonDown("Inventory") && CurrentAction == "Inventory") {
+				freeze  = false;
+				CurrentAction = "None";
+				InvatoryHUD.SetActive(false);
+				GameHUD.SetActive(true);
 			}
 
 
@@ -147,39 +181,6 @@ public class PlayerObjectScript: HealthManager {
 					}
 				}
 			}
-		}
-
-		//Menu controls
-		if (Input.GetButtonDown ("Interact") && CurrentAction == "None") {
-			RaycastHit hit;
-			Ray ray = camera.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0.0f));
-			
-			if(Physics.Raycast(ray, out hit, 1.0f)) {
-				if(hit.collider.tag == "WorkBench"){
-					freeze  = true;
-					CurrentAction = "WorkBench";
-					WorkBenchHUD.SetActive(true);
-					GameHUD.SetActive(false);
-				}
-			}			
-		}
-		else if (Input.GetButtonDown ("Interact") && CurrentAction == "WorkBench") {
-			freeze  = false;
-			CurrentAction = "None";
-			WorkBenchHUD.SetActive(false);
-			GameHUD.SetActive(true);
-		}
-		else if (Input.GetButtonDown("Inventory") && CurrentAction == "None") {
-			freeze  = true;
-			CurrentAction = "Inventory";
-			InvatoryHUD.SetActive(true);
-			GameHUD.SetActive(false);
-		}
-		else if (Input.GetButtonDown("Inventory") && CurrentAction == "Inventory") {
-			freeze  = false;
-			CurrentAction = "None";
-			InvatoryHUD.SetActive(false);
-			GameHUD.SetActive(true);
 		}
 	
     }

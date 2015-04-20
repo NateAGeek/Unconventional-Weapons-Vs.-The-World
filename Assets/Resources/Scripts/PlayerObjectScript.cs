@@ -121,7 +121,7 @@ public class PlayerObjectScript: HealthManager {
 
 
 			//Weapon Interactions
-			if (Input.GetMouseButtonDown(1)) { //this should probably be changed to something like 'f' (a knockback-specific button) so it doesn't conflict with 'Fire1'
+			if (Input.GetButtonDown("Fire2")) { 
 				//Knock dem bitches back
 				RaycastHit hit;
 				Ray ray = camera.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0.0f));

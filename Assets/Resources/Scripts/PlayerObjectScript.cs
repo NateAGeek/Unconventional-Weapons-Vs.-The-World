@@ -10,6 +10,7 @@ public class PlayerObjectScript: DamageManager {
 	public float      jumpVelocity      = 5.0f;
 	public float      knockbackDistance = 5.0f;
 	public GameObject GameHUDCanvas;
+	public GameObject InventoryBag;
 
 	//Component Vars
 	private Rigidbody rigidbody;
@@ -25,22 +26,39 @@ public class PlayerObjectScript: DamageManager {
 	private string    CurrentAction     = "None";
 	private string    CurrentMenu       = "HUD";
 
+	private List<GameObject> Inventory = new List<GameObject>();
+
 	//Game HUD
 	private GameObject GameHUD;
 	private GameObject InvatoryHUD;
 	private GameObject WorkBenchHUD;
+	private GameObject InventoryHUD;
+	private GUIInventory InventoryGUI;
 
     void Start() {
-		if (this.maxHealth == 0) {
-			this.maxHealth = 100;
+		if (maxHealth == 0) {
+			maxHealth = 100;
 		}
-		this.currentHealth = this.maxHealth;
+
+		//Add Temp items?
+		Inventory.Add(Resources.Load("Prefabs/MetalNail") as GameObject);
+		Inventory.Add(Resources.Load("Prefabs/WoodPlank") as GameObject);
+
+		currentHealth = maxHealth;
 		camera = GetComponentInChildren<Camera>();
 		rigidbody = GetComponent<Rigidbody>();
+		InventoryBag = transform.Find("InventoryBag").gameObject;
 		if (GameHUDCanvas != null) {
 			GameHUD = GameHUDCanvas.transform.Find("HUD").gameObject;
 			InvatoryHUD = GameHUDCanvas.transform.Find("InventoryMenu").gameObject;
 			WorkBenchHUD = GameHUDCanvas.transform.Find("WorkBenchMenu").gameObject;
+			InventoryHUD = GameHUDCanvas.transform.Find("Inventory").gameObject;
+
+			InventoryGUI = InventoryHUD.GetComponent<GUIInventory>();
+			InventoryGUI.InitiateInventory(Inventory);
+
+			Debug.Log(InventoryGUI);
+
 		}
     }
 
@@ -81,6 +99,22 @@ public class PlayerObjectScript: DamageManager {
 			}
 			if(Input.GetKeyUp(KeyCode.LeftControl)){
 				transform.localScale += new Vector3(0.0f, 0.25f, 0.0f);
+			}
+
+			//Item handel this stuff m8
+			if(Input.GetButtonDown("Interact")){
+				RaycastHit hit;
+				Ray ray = gameObject.GetComponentInChildren<Camera>().ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2));
+				
+				if(Physics.Raycast(ray, out hit)){
+					if(hit.transform.gameObject.tag == "Interactable"){
+						Inventory.Add(hit.collider.gameObject);
+						hit.collider.transform.position = InventoryBag.transform.position;
+						hit.collider.transform.rotation = InventoryBag.transform.rotation;
+
+						hit.collider.transform.parent = InventoryBag.transform;
+					}
+				}
 			}
 
 

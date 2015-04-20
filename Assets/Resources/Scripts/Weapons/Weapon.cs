@@ -12,7 +12,7 @@ public class Weapon : MonoBehaviour {
 	void Start () {
 		outfit = null;
 		weaponInventory = new List<IWeaponOutfit>();
-
+		/*
 		melee = Instantiate(Resources.Load ("Prefabs/MeleeWeapon")) as GameObject;
 		melee.transform.parent = transform;
 
@@ -28,6 +28,7 @@ public class Weapon : MonoBehaviour {
 		MetalNail NailComp = WoodPlankObject.GetComponent<MetalNail> ();
 
 		melee_comp.buildWeapon (WoodPlankComp, NailComp);
+		*/
 
 	}
 	

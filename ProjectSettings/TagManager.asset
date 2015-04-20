@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Interactable
+  - Player
+  - Gnome
+  - Scrap
+  - WorkBench
   layers:
   - Default
   - TransparentFX

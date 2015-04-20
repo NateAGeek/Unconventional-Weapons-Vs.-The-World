@@ -6,11 +6,29 @@ using System.Collections.Generic;
 public class Weapon : MonoBehaviour {
 	private IWeaponOutfit outfit;
 	private List<IWeaponOutfit> weaponInventory;
+	private GameObject melee;
 
 	// Use this for initialization
 	void Start () {
 		outfit = null;
 		weaponInventory = new List<IWeaponOutfit>();
+
+		melee = Instantiate(Resources.Load ("Prefabs/MeleeWeapon")) as GameObject;
+		melee.transform.parent = transform;
+
+		GameObject WoodPlankObject = Instantiate(Resources.Load ("Prefabs/WoodPlank")) as GameObject;
+		WoodPlankObject.transform.parent = melee.transform;
+
+		GameObject NailObject = Instantiate(Resources.Load ("Prefabs/MetalNail")) as GameObject;
+		NailObject.transform.parent = melee.transform;
+
+
+		MeleeWeapon melee_comp = melee.GetComponent<MeleeWeapon>();
+		WoodPlank WoodPlankComp = WoodPlankObject.GetComponent<WoodPlank> ();
+		MetalNail NailComp = WoodPlankObject.GetComponent<MetalNail> ();
+
+		melee_comp.buildWeapon (WoodPlankComp, NailComp);
+
 	}
 	
 	// Update is called once per frame
@@ -24,13 +42,7 @@ public class Weapon : MonoBehaviour {
 
 			if(Physics.Raycast(ray, out hit)){
 				if(hit.transform.gameObject.tag == "Interactable"){
-					if(outfit != null){
-						unequipItem();
-					}
-					hit.collider.enabled = false;
-					Rigidbody itembody = hit.transform.gameObject.GetComponent<Rigidbody>();
-					itembody.isKinematic = true;
-					equipItem(hit.transform.gameObject.GetComponent<Scrap>());
+
 				}
 			}
 		}
@@ -54,7 +66,14 @@ public class Weapon : MonoBehaviour {
 
 	public void dropItem()
 	{
-
+		//If just want to drop
+		GameObject entity  = outfit.getEntity();
+		Rigidbody itembody = entity.GetComponent<Rigidbody>();
+		Collider collider  = entity.GetComponent<Collider>();
+		
+		collider.enabled        = true;
+		itembody.isKinematic    = false;
+		entity.transform.parent = null;
 	}
 
 	public bool itemEquipped()

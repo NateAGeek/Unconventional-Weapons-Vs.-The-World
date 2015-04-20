@@ -42,8 +42,8 @@ public class PlayerObjectScript: HealthManager {
 		maxDamage = 15;
 
 		//Add Temp items?
-		Inventory.Add(Resources.Load("Prefabs/MetalNail") as GameObject);
-		Inventory.Add(Resources.Load("Prefabs/WoodPlank") as GameObject);
+//		Inventory.Add(Instantiate(Resources.Load("Prefabs/MetalNail")) as GameObject);
+//		Inventory.Add(Instantiate(Resources.Load("Prefabs/WoodPlank")) as GameObject);
 
 		currentHealth = maxHealth;
 		camera = GetComponentInChildren<Camera>();
@@ -109,14 +109,11 @@ public class PlayerObjectScript: HealthManager {
 				if (Physics.Raycast (ray, out hit)) {
 					if (hit.transform.gameObject.tag == "Interactable") {
 						Inventory.Add (hit.collider.gameObject);
-
 						InventoryGUI.Add (hit.collider.gameObject);
 
 						hit.collider.transform.position = InventoryBag.transform.position;
 						hit.collider.transform.rotation = InventoryBag.transform.rotation;
 						hit.collider.transform.parent = InventoryBag.transform;
-
-
 					}
 				}
 			}

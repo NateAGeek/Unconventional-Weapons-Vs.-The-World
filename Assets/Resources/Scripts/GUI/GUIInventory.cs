@@ -19,6 +19,8 @@ public class GUIInventory : MonoBehaviour {
 
 	public void Add(GameObject itemObject){
 		GameObject invoItem = Instantiate(InventoryItemPrefab) as GameObject;
+		GUIInventorytItem props = invoItem.GetComponent<GUIInventorytItem>();
+		props.iteamObjectRefrance = itemObject;
 		invoItem.name = itemObject.GetComponent<ScrapPiece>().name();
 		invoItem.transform.parent = transform;
 		
@@ -29,6 +31,8 @@ public class GUIInventory : MonoBehaviour {
 	public void InitiateInventory(List<GameObject> scraps){
 		foreach(GameObject scrap in scraps){
 			GameObject invoItem = Instantiate(InventoryItemPrefab) as GameObject;
+			GUIInventorytItem props = invoItem.GetComponent<GUIInventorytItem>();
+			props.iteamObjectRefrance = scrap;
 			invoItem.name = scrap.GetComponent<ScrapPiece>().name();
 			invoItem.transform.parent = transform;
 

@@ -28,6 +28,7 @@ GameObject:
   - 222: {fileID: 22263398}
   - 114: {fileID: 11467596}
   - 114: {fileID: 11413404}
+  - 114: {fileID: 11420170}
   m_Layer: 5
   m_Name: InventoryItem
   m_TagString: Untagged
@@ -76,6 +77,18 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &11420170
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 128646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4ecd4f8a13204ca8b4acb279179bc59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iteamObjectRefrance: {fileID: 0}
 --- !u!114 &11451046
 MonoBehaviour:
   m_ObjectHideFlags: 1

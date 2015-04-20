@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
 public class WorkBench : MonoBehaviour {
 	
 	public GameObject WeaponRecipeGUI;
+	public GameObject InventoryGUI;
 	
 	private List<IWeaponOutfit> Recipes = new List<IWeaponOutfit>();
 	
@@ -19,7 +21,16 @@ public class WorkBench : MonoBehaviour {
 			recipeSlot.setRecipeName(recipe.Key);
 			recipeSlot.setRequired(recipe.Value);
 
+			Button recipeSlotButton = recipeSlot.getButton();
+			GUIInventory inven = InventoryGUI.GetComponent<GUIInventory>();
+
+			recipeSlotButton.onClick.AddListener(() => {
+				inven.FilterInventory(recipe.Key);
+				InventoryGUI.SetActive(true);
+			});
+
 			GUIRecipeSlot.transform.parent = WeaponRecipeGUI.transform;
+
 		}
 	}
 	

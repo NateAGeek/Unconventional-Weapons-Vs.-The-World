@@ -30,7 +30,6 @@ public class PlayerObjectScript: HealthManager {
 
 	//Game HUD
 	private GameObject GameHUD;
-	private GameObject InvatoryHUD;
 	private GameObject WorkBenchHUD;
 	private GameObject InventoryHUD;
 	private GUIInventory InventoryGUI;
@@ -50,7 +49,6 @@ public class PlayerObjectScript: HealthManager {
 		InventoryBag = transform.Find("InventoryBag").gameObject;
 		if (GameHUDCanvas != null) {
 			GameHUD = GameHUDCanvas.transform.Find("HUD").gameObject;
-			InvatoryHUD = GameHUDCanvas.transform.Find("InventoryMenu").gameObject;
 			WorkBenchHUD = GameHUDCanvas.transform.Find("WorkBenchMenu").gameObject;
 			InventoryHUD = GameHUDCanvas.transform.Find("Inventory").gameObject;
 
@@ -64,7 +62,6 @@ public class PlayerObjectScript: HealthManager {
 
     void Update() {
 		CheckLiving();
-
 
 		//Check if frozen for movment and other abilities to be active
 		if (!freeze) {
@@ -109,10 +106,14 @@ public class PlayerObjectScript: HealthManager {
 				if(Physics.Raycast(ray, out hit)){
 					if(hit.transform.gameObject.tag == "Interactable"){
 						Inventory.Add(hit.collider.gameObject);
+
+						InventoryGUI.Add(hit.collider.gameObject);
+
 						hit.collider.transform.position = InventoryBag.transform.position;
 						hit.collider.transform.rotation = InventoryBag.transform.rotation;
-
 						hit.collider.transform.parent = InventoryBag.transform;
+
+
 					}
 				}
 			}
@@ -156,13 +157,13 @@ public class PlayerObjectScript: HealthManager {
 		else if (Input.GetButtonDown("Invotory") && CurrentAction == "None") {
 			freeze  = true;
 			CurrentAction = "Invotory";
-			InvatoryHUD.SetActive(true);
+			InventoryHUD.SetActive(true);
 			GameHUD.SetActive(false);
 		}
 		else if (Input.GetButtonDown("Invotory") && CurrentAction == "Invotory") {
 			freeze  = false;
 			CurrentAction = "None";
-			InvatoryHUD.SetActive(false);
+			InventoryHUD.SetActive(false);
 			GameHUD.SetActive(true);
 		}
 	

@@ -29,6 +29,9 @@ public class RecipeSlot : MonoBehaviour {
 		required = req;
 	}
 
+	public Button getButton(){
+		return RecipeSlotButtonObject.GetComponent<Button>();
+	}
 	// Update is called once per frame
 	void Update () {
 		

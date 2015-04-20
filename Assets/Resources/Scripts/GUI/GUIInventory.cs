@@ -17,14 +17,29 @@ public class GUIInventory : MonoBehaviour {
 	
 	}
 
+	public void Add(GameObject itemObject){
+		
+	}
+
 	public void InitiateInventory(List<GameObject> scraps){
 		foreach(GameObject scrap in scraps){
 			GameObject invoItem = Instantiate(InventoryItemPrefab) as GameObject;
+			invoItem.name = scrap.GetComponent<ScrapPiece>().name();
 			invoItem.transform.parent = transform;
 
 			Text iteamName = invoItem.transform.Find("ItemName").GetComponent<Text>();
 			iteamName.text = scrap.GetComponent<ScrapPiece>().name(); 
 
+		}
+	}
+
+	public void FilterInventory(string filterTag){
+		foreach (Transform child in transform) {
+//			ScrapPiece scrapChild = child.gameObject.GetComponent<ScrapPiece>();
+//			if (!scrapChild.canFunctionAs(filterTag)){
+//				child.gameObject.SetActive(false);
+//			}
+			Debug.Log("Filtering by:"+filterTag+". GameObject name:"+child.gameObject.name);
 		}
 	}
 }

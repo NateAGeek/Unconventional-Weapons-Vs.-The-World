@@ -37,8 +37,10 @@ public class PlayerObjectScript: HealthManager {
 
     void Start() {
 		if (maxHealth == 0) {
-			maxHealth = 100;
+			maxHealth = 500;
 		}
+		//TODO: remove this once weapons are the things that actually do damage
+		maxDamage = 15;
 
 		//Add Temp items?
 		Inventory.Add(Resources.Load("Prefabs/MetalNail") as GameObject);
@@ -119,7 +121,7 @@ public class PlayerObjectScript: HealthManager {
 
 
 			//Weapon Interactions
-			if (Input.GetMouseButtonDown(1)) {
+			if (Input.GetMouseButtonDown(1)) { //this should probably be changed to something like 'f' (a knockback-specific button) so it doesn't conflict with 'Fire1'
 				//Knock dem bitches back
 				RaycastHit hit;
 				Ray ray = camera.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0.0f));
@@ -130,7 +132,21 @@ public class PlayerObjectScript: HealthManager {
 						gnome.knockbackGnome(transform);
 					}
 				}
-			}		
+			}
+
+			if(Input.GetButtonDown("Fire1")) {
+				RaycastHit hit;
+				//ray through the middle of the screen, i.e. where the player is looking
+				Ray ray = gameObject.GetComponentInChildren<Camera>().ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2));
+
+				if(Physics.Raycast(ray, out hit)) {
+					if(hit.collider.tag == "Gnome") {
+						Gnome gnome = hit.collider.gameObject.GetComponent<Gnome>();
+						//TODO: weapons should be the things dealing damage. once the equip system is set up, change this to be something like `currentWeapon.DealDamage(gnome);`
+						DealDamage(gnome);
+					}
+				}
+			}
 		}
 
 		//Menu controls
@@ -153,13 +169,13 @@ public class PlayerObjectScript: HealthManager {
 			WorkBenchHUD.SetActive(false);
 			GameHUD.SetActive(true);
 		}
-		else if (Input.GetButtonDown("Invotory") && CurrentAction == "None") {
+		else if (Input.GetButtonDown("Inventory") && CurrentAction == "None") {
 			freeze  = true;
-			CurrentAction = "Invotory";
+			CurrentAction = "Inventory";
 			InvatoryHUD.SetActive(true);
 			GameHUD.SetActive(false);
 		}
-		else if (Input.GetButtonDown("Invotory") && CurrentAction == "Invotory") {
+		else if (Input.GetButtonDown("Inventory") && CurrentAction == "Inventory") {
 			freeze  = false;
 			CurrentAction = "None";
 			InvatoryHUD.SetActive(false);

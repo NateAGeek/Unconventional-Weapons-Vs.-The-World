@@ -5,7 +5,7 @@ public abstract class HealthManager : MonoBehaviour {
 
 	//health
 	public int maxHealth;
-	protected int currentHealth;
+	public int currentHealth;
 	public bool isAlive = true;
 
 	//damage
@@ -48,6 +48,6 @@ public abstract class HealthManager : MonoBehaviour {
 	//for some variety ;-)
 	//this can either be changed or overridden in subclasses
 	protected int CalculateDamage() {
-		return Random.Range (maxDamage - 5, maxDamage);
+		return maxDamage;
 	}
 }

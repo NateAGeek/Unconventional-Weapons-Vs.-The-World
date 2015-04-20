@@ -41,7 +41,7 @@ public class MeleeWeapon : HealthManager, IWeaponOutfit {
 
 	public int weaponHealth()
 	{
-		return 0;
+		return this.currentHealth;
 	}
 
 	public bool throwable()

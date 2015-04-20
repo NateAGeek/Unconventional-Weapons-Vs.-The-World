@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public interface IWeaponOutfit {
 	
@@ -13,6 +14,8 @@ public interface IWeaponOutfit {
 	//Equip methods
 	void onUnequip();
 	void onEquip();
+
+	Dictionary<string, bool> getRecipe();
 
 	GameObject getEntity();
 }

@@ -9,12 +9,12 @@ GameObject:
   m_Component:
   - 4: {fileID: 439350}
   m_Layer: 0
-  m_Name: Inventory
+  m_Name: InventoryBag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &120982
 GameObject:
   m_ObjectHideFlags: 1
@@ -280,7 +280,11 @@ MonoBehaviour:
   jumpVelocity: 5
   knockbackDistance: 1
   GameHUDCanvas: {fileID: 0}
+<<<<<<< HEAD
   InventoryBag: {fileID: 0}
+=======
+  InventoryBag: {fileID: 104260}
+>>>>>>> 5dd77a13d113076f423e4a704be2b80f76a4a00f
 --- !u!136 &13699360
 CapsuleCollider:
   m_ObjectHideFlags: 1

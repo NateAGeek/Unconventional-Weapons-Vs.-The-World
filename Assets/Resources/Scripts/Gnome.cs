@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Gnome : HealthManager {
 
+	public float         jumpVelocity = 5f;
 	private NavMeshAgent agent;
 	private EnemyAI      ai;
 	private Rigidbody    rigidbody;
@@ -10,6 +11,8 @@ public class Gnome : HealthManager {
 	private bool         isAttacking;
 	private float        lastAttackTime;
 	private float        attackCooldown = 1f;
+	private bool         isGrounded;
+	private bool         shouldJump = false;
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +28,7 @@ public class Gnome : HealthManager {
 		agent = GetComponent<NavMeshAgent>();
 		rigidbody = GetComponent<Rigidbody>();
 		isAttacking = false;
+		isGrounded = true;
 		ai = new EnemyAI (this.agent);
 	}
 	
@@ -41,6 +45,13 @@ public class Gnome : HealthManager {
 			}
 			agent.Resume();
 		}
+
+		if (isGrounded && shouldJump) {
+			this.rigidbody.AddForce(transform.up * jumpVelocity, ForceMode.VelocityChange);
+			isGrounded = false;
+			shouldJump = false;
+		}
+
 		//refresh the attack cooldown
 		if(Time.time >= lastAttackTime + attackCooldown) {
 			isAttacking = false;
@@ -49,14 +60,25 @@ public class Gnome : HealthManager {
 		ai.Update (transform);
 	}
 
-	void OnCollisionStay(Collision hit){
+	void OnTriggerEnter(Collision hit) {
+		//if a jumpable object (like stairs) enters the obstacle-detector...
+		if (hit.gameObject.tag == "Jumpable") {
+			shouldJump = true;
+			Debug.Log("should jump!");
+		}
+	}
+
+	void OnTriggerStay(Collision hit){
 		if (hit.gameObject.tag == "Player") {
-			if(!isAttacking) {
+			if (!isAttacking) {
 				isAttacking = true;
-				PlayerObjectScript player = hit.gameObject.GetComponent<PlayerObjectScript>();
-				DealDamage(player);
+				PlayerObjectScript player = hit.gameObject.GetComponent<PlayerObjectScript> ();
+				DealDamage (player);
 				lastAttackTime = Time.time;
 			}
+		} else if (hit.gameObject.tag == "Jumpable" || hit.gameObject.tag == "Untagged") {
+			isGrounded = true;
+			Debug.Log("grounded on " + hit.gameObject.tag);
 		}
 	}
 

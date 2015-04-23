@@ -30,7 +30,6 @@ public class DummyObjectScript : HealthManager {
     }
 
     void Update() {
-		this.CheckLiving();
 		//Do the Calculations for rotation
 		rotation.x += Input.GetAxis ("Mouse X") * sensitivity.x;
 		rotation.y += Input.GetAxis ("Mouse Y") * sensitivity.y;

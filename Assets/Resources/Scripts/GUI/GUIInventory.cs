@@ -7,6 +7,8 @@ public class GUIInventory : MonoBehaviour {
 
 	public GameObject InventoryItemPrefab;
 
+	private string inventoryMode = "None";
+
 	// Use this for initialization
 	void Start () {
 	
@@ -20,9 +22,9 @@ public class GUIInventory : MonoBehaviour {
 	public void Add(GameObject itemObject){
 		GameObject invoItem = Instantiate(InventoryItemPrefab) as GameObject;
 		GUIInventorytItem props = invoItem.GetComponent<GUIInventorytItem>();
-		props.iteamObjectRefrance = itemObject;
+		props.itemObjectRefrance = itemObject;
 		invoItem.name = itemObject.GetComponent<ScrapPiece>().name();
-		invoItem.transform.parent = transform;
+		invoItem.transform.SetParent (transform, false);
 		
 		Text iteamName = invoItem.transform.Find("ItemName").GetComponent<Text>();
 		iteamName.text = itemObject.GetComponent<ScrapPiece>().name(); 
@@ -32,9 +34,9 @@ public class GUIInventory : MonoBehaviour {
 		foreach(GameObject scrap in scraps){
 			GameObject invoItem = Instantiate(InventoryItemPrefab) as GameObject;
 			GUIInventorytItem props = invoItem.GetComponent<GUIInventorytItem>();
-			props.iteamObjectRefrance = scrap;
+			props.itemObjectRefrance = scrap;
 			invoItem.name = scrap.GetComponent<ScrapPiece>().name();
-			invoItem.transform.parent = transform;
+			invoItem.transform.SetParent(transform, false);
 
 			Text iteamName = invoItem.transform.Find("ItemName").GetComponent<Text>();
 			iteamName.text = scrap.GetComponent<ScrapPiece>().name(); 
@@ -44,11 +46,34 @@ public class GUIInventory : MonoBehaviour {
 
 	public void FilterInventory(string filterTag){
 		foreach (Transform child in transform) {
-//			ScrapPiece scrapChild = child.gameObject.GetComponent<ScrapPiece>();
-//			if (!scrapChild.canFunctionAs(filterTag)){
-//				child.gameObject.SetActive(false);
-//			}
-			Debug.Log("Filtering by:"+filterTag+". GameObject name:"+child.gameObject.name);
+			GUIInventorytItem invenItem = child.gameObject.GetComponent<GUIInventorytItem>();
+			ScrapPiece scrapChild = invenItem.itemObjectRefrance.GetComponent<ScrapPiece>();
+
+			Debug.Log("Filtering by: "+filterTag);
+
+			if (!scrapChild.canFunctionAs(filterTag)){
+				child.gameObject.SetActive(false);
+			}
 		}
+	}
+
+	public void FilterInventoryAndSetWorkbenchMode(string filterTag, GameObject recipeSlotSelection){
+		foreach (Transform child in transform) {
+			GUIInventorytItem invenItem = child.gameObject.GetComponent<GUIInventorytItem>();
+			ScrapPiece scrapChild = invenItem.itemObjectRefrance.GetComponent<ScrapPiece>();
+			
+			Debug.Log("Filtering by: "+filterTag);
+			
+			if (!scrapChild.canFunctionAs(filterTag)){
+				child.gameObject.SetActive(false);
+				continue;
+			}
+			
+			invenItem.setWorkbenchSelection("RecipeSelect", recipeSlotSelection.transform);
+		}
+	}
+
+	public void setMode(string mode){
+		inventoryMode = mode;
 	}
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class WoodPlank : MonoBehaviour, ScrapPiece {
 	
-	private List<string> funtionality = new List<string>() {"Stock", "Base", "CrapInside"}; 
+	private List<string> funtionality = new List<string>() {"Stock", "Base"}; 
 	private int health = 100;
 	private string currentType = "default";
 	private MeshFilter meshFilter;

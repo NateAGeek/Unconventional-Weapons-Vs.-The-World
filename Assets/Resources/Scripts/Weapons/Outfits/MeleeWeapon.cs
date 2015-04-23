@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class MeleeWeapon : HealthManager, IWeaponOutfit {
 	private GameObject entity;
 	private Dictionary<string, bool> WeaponComponets = new Dictionary<string, bool>(){
-		{"Base"      , true},
 		{"CrapInside", true},
+		{"Base"      , true},
 	};
 	private Dictionary<string, ScrapPiece> WeaponComponents = new Dictionary<string, ScrapPiece>();
 

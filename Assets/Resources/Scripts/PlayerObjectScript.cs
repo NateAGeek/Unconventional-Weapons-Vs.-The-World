@@ -23,16 +23,11 @@ public class PlayerObjectScript: HealthManager {
 	private bool      onGround          = true;
 	private bool      hitSomethingInAir = false;
 	private bool      freeze            = false;
-	private string    CurrentAction     = "None";
-	private string    CurrentMenu       = "HUD";
 
 	private List<GameObject> Inventory = new List<GameObject>();
 
-	//Game HUD
-	private GameObject GameHUD;
-	private GameObject WorkBenchHUD;
-	private GameObject InventoryHUD;
 	private GUIInventory InventoryGUI;
+	private GameObject InventoryHUD;
 
     void Start() {
 		if (maxHealth == 0) {
@@ -50,20 +45,14 @@ public class PlayerObjectScript: HealthManager {
 		rigidbody = GetComponent<Rigidbody>();
 		InventoryBag = transform.Find("InventoryBag").gameObject;
 		if (GameHUDCanvas != null) {
-			GameHUD = GameHUDCanvas.transform.Find("HUD").gameObject;
-			WorkBenchHUD = GameHUDCanvas.transform.Find("WorkBenchMenu").gameObject;
 			InventoryHUD = GameHUDCanvas.transform.Find("Inventory").gameObject;
 
 			InventoryGUI = InventoryHUD.GetComponent<GUIInventory>();
 			InventoryGUI.InitiateInventory(Inventory);
-
-			Debug.Log(InventoryGUI);
-
 		}
     }
 
     void Update() {
-		CheckLiving();
 
 		//Check if frozen for movment and other abilities to be active
 		if (!freeze) {
@@ -118,37 +107,6 @@ public class PlayerObjectScript: HealthManager {
 				}
 			}
 
-			//Menu controls
-			if (Input.GetButtonDown ("Interact") && CurrentAction == "None") {
-				RaycastHit hit;
-				Ray ray = camera.ScreenPointToRay (new Vector3 (Screen.width / 2, Screen.height / 2, 0.0f));
-				
-				if (Physics.Raycast (ray, out hit, 1.0f)) {
-					if (hit.collider.tag == "WorkBench") {
-						freeze = true;
-						CurrentAction = "WorkBench";
-						WorkBenchHUD.SetActive (true);
-						GameHUD.SetActive (false);
-					}
-				}			
-			} else if (Input.GetButtonDown ("Interact") && CurrentAction == "WorkBench") {
-				freeze = false;
-				CurrentAction = "None";
-				WorkBenchHUD.SetActive (false);
-				GameHUD.SetActive (true);
-			} else if (Input.GetButtonDown ("Inventory") && CurrentAction == "None") {
-				freeze = true;
-				CurrentAction = "Inventory";
-				InventoryHUD.SetActive (true);
-				GameHUD.SetActive (false);
-			} else if (Input.GetButtonDown ("Inventory") && CurrentAction == "Inventory") {
-				freeze = false;
-				CurrentAction = "None";
-				InventoryHUD.SetActive (false);
-				GameHUD.SetActive (true);
-			}
-
-
 			//Weapon Interactions
 			if (Input.GetButtonDown ("Fire2")) { 
 				//Knock dem bitches back
@@ -177,11 +135,11 @@ public class PlayerObjectScript: HealthManager {
 				}
 			}
 		}
+		
+	}
 	
-    }
-
 	void FixedUpdate() {
-
+		
 	}
 
     void OnCollisionEnter(Collision hit) {
@@ -217,6 +175,10 @@ public class PlayerObjectScript: HealthManager {
 	void OnTriggerExit(Collider hit){
 		//Trigger for feet to see if off floor to entity
 		onGround = false;
+	}
+
+	public void setFreeze(bool f){
+		freeze = f;
 	}
 
 	protected override void OnDead() {

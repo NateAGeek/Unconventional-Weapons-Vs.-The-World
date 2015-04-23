@@ -22,6 +22,7 @@ public abstract class HealthManager : MonoBehaviour {
 
 		if (this.currentHealth <= 0) {
 			this.isAlive = false;
+			this.OnDead();
 		}
 	}
 
@@ -31,12 +32,6 @@ public abstract class HealthManager : MonoBehaviour {
 	/// <param name="other">the entity being damaged</param>
 	public void DealDamage(HealthManager other) {
 		other.ReceiveDamage (CalculateDamage ());
-	}
-
-	protected void CheckLiving() {
-		if (!this.isAlive) {
-			this.OnDead();
-		}
 	}
 
 	/// <summary>

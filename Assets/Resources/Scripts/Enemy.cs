@@ -24,7 +24,6 @@ public class Enemy : HealthManager {
 	// Update is called once per frame
 	void Update () {
 		//check to see if this entity is still living
-		this.CheckLiving();
 		this.ai.Update (this.transform);
 	}
 

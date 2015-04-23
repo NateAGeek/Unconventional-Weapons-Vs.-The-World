@@ -31,7 +31,6 @@ public class Gnome : HealthManager {
 	// Update is called once per frame
 	void Update () {
 		//check to see if this entity is still living
-		CheckLiving();
 		if (knockedback) {
 			agent.Stop();
 			Debug.Log("Knocked Back: "+rigidbody.velocity.magnitude);
